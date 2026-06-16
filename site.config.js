@@ -26,7 +26,7 @@ export default {
   },
 
   // Where the site will live (used for absolute links / meta tags).
-  url: "https://ragnar-vallhala.github.io/portfolio-blog",
+  url: "https://ragnar-vallhala.github.io",
 
   // Footer + meta
   email: "ashutoshvishwakarma208@gmail.com",
