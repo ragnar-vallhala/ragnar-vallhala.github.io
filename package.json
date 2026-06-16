@@ -1,0 +1,19 @@
+{
+  "name": "portfolio",
+  "version": "1.0.0",
+  "description": "A personal portfolio and blog. Write Markdown, get a rendered static site.",
+  "type": "module",
+  "scripts": {
+    "build": "node build.js",
+    "dev": "node build.js --watch",
+    "serve": "node build.js --watch --serve",
+    "edit": "node editor-server.js"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3",
+    "highlight.js": "^11.9.0",
+    "katex": "^0.16.47",
+    "marked": "^12.0.2",
+    "marked-highlight": "^2.1.1"
+  }
+}

@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="540" font-size="11">
+<style>
+  :root{
+    --bg:#f6f2e9; --grid:#d8d0bf; --ink:#211e1a; --soft:#5a554c;
+    --faint:#8a8478; --accent:#b4451f; --slate:#3f6b86; --attain:#211e1a;
+  }
+  @media (prefers-color-scheme:dark){:root{
+    --bg:#1a1815; --grid:#38332c; --ink:#ece4d4; --soft:#b3aa98;
+    --faint:#7c7568; --accent:#e07a4e; --slate:#8fb4c8; --attain:#ece4d4;
+  }}
+  .bg{fill:var(--bg)} .grid{stroke:var(--grid);stroke-width:1}
+  .ttl{fill:var(--ink);font-weight:700} .ax{fill:var(--ink)}
+  .tk{fill:var(--soft)} .cap{fill:var(--soft)}
+  .roof1{stroke:var(--accent);stroke-width:2.2;fill:none}
+  .roof4{stroke:var(--slate);stroke-width:2.2;fill:none;stroke-dasharray:6 4}
+  .base{fill:var(--faint)} .att{fill:var(--attain)}
+  .lbl{fill:var(--ink)} .lead{stroke:var(--faint);stroke-width:0.8}
+  text{font-family:'Spline Sans Mono',ui-monospace,monospace}
+</style>
+<rect class="bg" width="900" height="540"/>
+<text class="ttl" x="72" y="24" font-size="15">AVR-XPU roofline — attainable ops/cycle vs arithmetic intensity</text>
+<line class="grid" x1="72.0" y1="46" x2="72.0" y2="486"/>
+<text class="tk" x="72.0" y="501" text-anchor="middle">0.0625</text>
+<line class="grid" x1="168.9" y1="46" x2="168.9" y2="486"/>
+<text class="tk" x="168.9" y="501" text-anchor="middle">0.125</text>
+<line class="grid" x1="265.7" y1="46" x2="265.7" y2="486"/>
+<text class="tk" x="265.7" y="501" text-anchor="middle">0.25</text>
+<line class="grid" x1="362.6" y1="46" x2="362.6" y2="486"/>
+<text class="tk" x="362.6" y="501" text-anchor="middle">0.5</text>
+<line class="grid" x1="459.4" y1="46" x2="459.4" y2="486"/>
+<text class="tk" x="459.4" y="501" text-anchor="middle">1</text>
+<line class="grid" x1="556.3" y1="46" x2="556.3" y2="486"/>
+<text class="tk" x="556.3" y="501" text-anchor="middle">2</text>
+<line class="grid" x1="653.1" y1="46" x2="653.1" y2="486"/>
+<text class="tk" x="653.1" y="501" text-anchor="middle">4</text>
+<line class="grid" x1="750.0" y1="46" x2="750.0" y2="486"/>
+<text class="tk" x="750.0" y="501" text-anchor="middle">8</text>
+<line class="grid" x1="72" y1="473.1" x2="750" y2="473.1"/>
+<text class="tk" x="65" y="476.1" text-anchor="end">0.005</text>
+<line class="grid" x1="72" y1="433.0" x2="750" y2="433.0"/>
+<text class="tk" x="65" y="436.0" text-anchor="end">0.01</text>
+<line class="grid" x1="72" y1="339.8" x2="750" y2="339.8"/>
+<text class="tk" x="65" y="342.8" text-anchor="end">0.05</text>
+<line class="grid" x1="72" y1="299.7" x2="750" y2="299.7"/>
+<text class="tk" x="65" y="302.7" text-anchor="end">0.1</text>
+<line class="grid" x1="72" y1="206.5" x2="750" y2="206.5"/>
+<text class="tk" x="65" y="209.5" text-anchor="end">0.5</text>
+<line class="grid" x1="72" y1="166.4" x2="750" y2="166.4"/>
+<text class="tk" x="65" y="169.4" text-anchor="end">1</text>
+<line class="grid" x1="72" y1="86.1" x2="750" y2="86.1"/>
+<text class="tk" x="65" y="89.1" text-anchor="end">4</text>
+<line class="grid" x1="72" y1="46.0" x2="750" y2="46.0"/>
+<text class="tk" x="65" y="49.0" text-anchor="end">8</text>
+<text class="ax" x="411.0" y="528" text-anchor="middle">arithmetic intensity (ops / byte moved)</text>
+<text class="ax" x="18" y="266.0" transform="rotate(-90 18 266.0)" text-anchor="middle">attainable ops/cycle</text>
+<polyline class="roof1" points="72.0,367.0 168.9,326.9 265.7,286.7 362.6,246.6 459.4,206.5 556.3,166.4 653.1,166.4 750.0,166.4"/>
+<text class="tk" x="560.3" y="161.4">W=1 roof</text>
+<polyline class="roof4" points="72.0,367.0 168.9,326.9 265.7,286.7 362.6,246.6 459.4,206.5 556.3,166.4 653.1,126.2 750.0,86.1"/>
+<text class="tk" x="754.0" y="81.1">W=4 roof</text>
+<circle class="base" cx="231.4" cy="438.8" r="3"/>
+<circle class="att" cx="231.4" cy="301.0" r="3.6"/>
+<circle class="base" cx="274.5" cy="445.3" r="3"/>
+<circle class="att" cx="274.5" cy="283.1" r="3.6"/>
+<circle class="base" cx="219.7" cy="435.2" r="3"/>
+<circle class="att" cx="219.7" cy="305.8" r="3.6"/>
+<circle class="base" cx="114.3" cy="464.8" r="3"/>
+<circle class="att" cx="114.3" cy="349.5" r="3.6"/>
+<circle class="base" cx="148.8" cy="459.2" r="3"/>
+<circle class="att" cx="148.8" cy="335.2" r="3.6"/>
+<circle class="base" cx="228.9" cy="451.4" r="3"/>
+<circle class="att" cx="228.9" cy="302.0" r="3.6"/>
+<circle class="base" cx="153.4" cy="445.0" r="3"/>
+<circle class="att" cx="153.4" cy="333.3" r="3.6"/>
+<circle class="base" cx="149.6" cy="438.4" r="3"/>
+<circle class="att" cx="149.6" cy="334.9" r="3.6"/>
+<circle class="base" cx="249.5" cy="448.5" r="3"/>
+<circle class="att" cx="249.5" cy="293.5" r="3.6"/>
+<circle class="base" cx="264.7" cy="448.6" r="3"/>
+<circle class="att" cx="264.7" cy="287.2" r="3.6"/>
+<circle class="base" cx="369.5" cy="350.6" r="3"/>
+<circle class="att" cx="369.5" cy="243.8" r="3.6"/>
+<circle class="base" cx="391.2" cy="339.8" r="3"/>
+<circle class="att" cx="391.2" cy="234.8" r="3.6"/>
+<text class="lbl" x="401.2" y="237.8" font-size="10">32-fc</text>
+<line class="lead" x1="373.5" y1="243.8" x2="377.5" y2="247.8"/>
+<text class="lbl" x="379.5" y="250.8" font-size="10">31-conv2d</text>
+<text class="lbl" x="284.5" y="286.1" font-size="10">12-ahrs</text>
+<line class="lead" x1="268.7" y1="287.2" x2="272.7" y2="296.1"/>
+<text class="lbl" x="274.7" y="299.1" font-size="10">25-dotprod</text>
+<line class="lead" x1="253.5" y1="293.5" x2="257.5" y2="309.1"/>
+<text class="lbl" x="259.5" y="312.1" font-size="10">24-matmul</text>
+<line class="lead" x1="235.4" y1="301.0" x2="239.4" y2="322.1"/>
+<text class="lbl" x="241.4" y="325.1" font-size="10">11-ekf</text>
+<line class="lead" x1="232.9" y1="302.0" x2="236.9" y2="335.1"/>
+<text class="lbl" x="238.9" y="338.1" font-size="10">21-fir</text>
+<line class="lead" x1="223.7" y1="305.8" x2="227.7" y2="348.1"/>
+<text class="lbl" x="229.7" y="351.1" font-size="10">13-quaternion</text>
+<line class="lead" x1="157.4" y1="333.3" x2="161.4" y2="361.1"/>
+<text class="lbl" x="163.4" y="364.1" font-size="10">22-biquad</text>
+<line class="lead" x1="153.6" y1="334.9" x2="157.6" y2="374.1"/>
+<text class="lbl" x="159.6" y="377.1" font-size="10">23-fft</text>
+<line class="lead" x1="152.8" y1="335.2" x2="156.8" y2="387.1"/>
+<text class="lbl" x="158.8" y="390.1" font-size="10">15-control-allocation</text>
+<line class="lead" x1="118.3" y1="349.5" x2="122.3" y2="400.1"/>
+<text class="lbl" x="124.3" y="403.1" font-size="10">14-control-pid</text>
+<text class="cap" x="72" y="510" font-size="10">grey = baseline softfloat; coloured dots = attainable at scalar HW arith (W=1); every kernel sits far left of the W=1 ridge (I=2) — memory-bound, so wider SIMD adds nothing</text>
+</svg>

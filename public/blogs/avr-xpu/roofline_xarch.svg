@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" font-size="11">
+<style>
+  :root{--bg:#f6f2e9;--grid:#d8d0bf;--ink:#211e1a;--soft:#5a554c;--faint:#8a8478;--accent:#b4451f;--slate:#3f6b86;}
+  @media (prefers-color-scheme:dark){:root{--bg:#1a1815;--grid:#38332c;--ink:#ece4d4;--soft:#b3aa98;--faint:#7c7568;--accent:#e07a4e;--slate:#8fb4c8;}}
+  .bg{fill:var(--bg)} .grid{stroke:var(--grid);stroke-width:1}
+  .ttl{fill:var(--ink);font-weight:700} .ax{fill:var(--ink)} .tk{fill:var(--soft)} .cap{fill:var(--soft)}
+  .arm{fill:var(--accent)} .rv{fill:var(--slate)} .avr{fill:var(--faint)}
+  .armS{stroke:var(--accent);stroke-width:2.2;fill:none} .rvS{stroke:var(--slate);stroke-width:2.2;fill:none}
+  .roof{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-dasharray:5 4}
+  .lbl{fill:var(--ink)} text{font-family:'Spline Sans Mono',ui-monospace,monospace}
+</style>
+<rect class="bg" width="900" height="520"/>
+<text class="ttl" x="72" y="24" font-size="15">Cross-arch roofline: achieved fp-ops/cycle vs arithmetic intensity</text>
+<line class="grid" x1="72.0" y1="46" x2="72.0" y2="466"/>
+<text class="tk" x="72.0" y="481" text-anchor="middle">0.03</text>
+<line class="grid" x1="183.9" y1="46" x2="183.9" y2="466"/>
+<text class="tk" x="183.9" y="481" text-anchor="middle">0.06</text>
+<line class="grid" x1="266.4" y1="46" x2="266.4" y2="466"/>
+<text class="tk" x="266.4" y="481" text-anchor="middle">0.1</text>
+<line class="grid" x1="414.3" y1="46" x2="414.3" y2="466"/>
+<text class="tk" x="414.3" y="481" text-anchor="middle">0.25</text>
+<line class="grid" x1="526.2" y1="46" x2="526.2" y2="466"/>
+<text class="tk" x="526.2" y="481" text-anchor="middle">0.5</text>
+<line class="grid" x1="638.1" y1="46" x2="638.1" y2="466"/>
+<text class="tk" x="638.1" y="481" text-anchor="middle">1</text>
+<line class="grid" x1="750.0" y1="46" x2="750.0" y2="466"/>
+<text class="tk" x="750.0" y="481" text-anchor="middle">2</text>
+<line class="grid" x1="72" y1="466.0" x2="750" y2="466.0"/>
+<text class="tk" x="65" y="469.0" text-anchor="end">0.004</text>
+<line class="grid" x1="72" y1="399.5" x2="750" y2="399.5"/>
+<text class="tk" x="65" y="402.5" text-anchor="end">0.01</text>
+<line class="grid" x1="72" y1="232.3" x2="750" y2="232.3"/>
+<text class="tk" x="65" y="235.3" text-anchor="end">0.1</text>
+<line class="grid" x1="72" y1="65.1" x2="750" y2="65.1"/>
+<text class="tk" x="65" y="68.1" text-anchor="end">1</text>
+<line class="roof" x1="72" y1="65.1" x2="750" y2="65.1"/>
+<text class="tk" x="746" y="60.1" text-anchor="end">scalar FP roof (1 op/cycle)</text>
+<circle class="avr" cx="208.8" cy="414.8" r="3.4"/>
+<circle class="arm" cx="644.3" cy="91.1" r="3.4"/>
+<circle class="rv" cx="566.3" cy="109.5" r="3.4"/>
+<circle class="avr" cx="189.2" cy="419.4" r="3.4"/>
+<circle class="arm" cx="414.9" cy="156.9" r="3.4"/>
+<circle class="rv" cx="414.3" cy="195.8" r="3.4"/>
+<circle class="avr" cx="186.6" cy="418.4" r="3.4"/>
+<circle class="arm" cx="404.3" cy="174.2" r="3.4"/>
+<circle class="rv" cx="404.3" cy="184.5" r="3.4"/>
+<circle class="avr" cx="196.8" cy="407.1" r="3.4"/>
+<circle class="arm" cx="436.6" cy="119.8" r="3.4"/>
+<circle class="rv" cx="437.1" cy="110.9" r="3.4"/>
+<circle class="avr" cx="178.4" cy="422.3" r="3.4"/>
+<circle class="arm" cx="432.6" cy="189.3" r="3.4"/>
+<circle class="rv" cx="432.6" cy="211.0" r="3.4"/>
+<circle class="avr" cx="189.2" cy="402.4" r="3.4"/>
+<circle class="arm" cx="457.6" cy="122.2" r="3.4"/>
+<circle class="rv" cx="454.1" cy="147.8" r="3.4"/>
+<circle class="avr" cx="163.9" cy="414.8" r="3.4"/>
+<circle class="arm" cx="356.7" cy="148.1" r="3.4"/>
+<circle class="rv" cx="356.7" cy="190.8" r="3.4"/>
+<circle class="avr" cx="166.9" cy="406.3" r="3.4"/>
+<circle class="arm" cx="383.8" cy="171.5" r="3.4"/>
+<circle class="rv" cx="379.9" cy="190.3" r="3.4"/>
+<circle class="avr" cx="130.1" cy="431.9" r="3.4"/>
+<circle class="arm" cx="278.8" cy="176.5" r="3.4"/>
+<circle class="rv" cx="365.7" cy="216.1" r="3.4"/>
+<circle class="avr" cx="118.4" cy="439.0" r="3.4"/>
+<circle class="arm" cx="450.1" cy="171.6" r="3.4"/>
+<circle class="rv" cx="481.9" cy="180.6" r="3.4"/>
+<circle class="avr" cx="770" cy="53" r="4"/>
+<text class="lbl" x="780" y="56" font-size="10">AVR softfloat</text>
+<circle class="arm" cx="770" cy="71" r="4"/>
+<text class="lbl" x="780" y="74" font-size="10">ARM64 NEON+VFP</text>
+<circle class="rv" cx="770" cy="89" r="4"/>
+<text class="lbl" x="780" y="92" font-size="10">RISC-V RV64GC</text>
+<text class="cap" x="766" y="118" font-size="9">AVR clusters bottom-left:</text>
+<text class="cap" x="766" y="130" font-size="9">low intensity, low</text>
+<text class="cap" x="766" y="142" font-size="9">throughput — no FPU.</text>
+<text class="ax" x="411.0" y="508" text-anchor="middle">arithmetic intensity (fp-ops / data-byte moved)</text>
+<text class="ax" x="18" y="256.0" transform="rotate(-90 18 256.0)" text-anchor="middle">achieved fp-ops / cycle</text>
+</svg>

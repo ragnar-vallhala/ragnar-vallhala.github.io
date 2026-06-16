@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" font-size="11">
+<style>
+  :root{--bg:#f6f2e9;--grid:#d8d0bf;--ink:#211e1a;--soft:#5a554c;--faint:#8a8478;--accent:#b4451f;--slate:#3f6b86;}
+  @media (prefers-color-scheme:dark){:root{--bg:#1a1815;--grid:#38332c;--ink:#ece4d4;--soft:#b3aa98;--faint:#7c7568;--accent:#e07a4e;--slate:#8fb4c8;}}
+  .bg{fill:var(--bg)} .grid{stroke:var(--grid);stroke-width:1}
+  .ttl{fill:var(--ink);font-weight:700} .ax{fill:var(--ink)} .tk{fill:var(--soft)} .cap{fill:var(--soft)}
+  .arm{fill:var(--accent)} .rv{fill:var(--slate)} .avr{fill:var(--faint)}
+  .armS{stroke:var(--accent);stroke-width:2.2;fill:none} .rvS{stroke:var(--slate);stroke-width:2.2;fill:none}
+  .roof{stroke:var(--ink);stroke-width:1.6;fill:none;stroke-dasharray:5 4}
+  .lbl{fill:var(--ink)} text{font-family:'Spline Sans Mono',ui-monospace,monospace}
+</style>
+<rect class="bg" width="900" height="560"/>
+<text class="ttl" x="20" y="24" font-size="15">Instruction-count reduction vs AVR softfloat (per invocation) — HW-FP ISAs</text>
+<line class="grid" x1="168.0" y1="46" x2="168.0" y2="508"/>
+<text class="tk" x="168.0" y="524" text-anchor="middle">0x</text>
+<line class="grid" x1="337.5" y1="46" x2="337.5" y2="508"/>
+<text class="tk" x="337.5" y="524" text-anchor="middle">20x</text>
+<line class="grid" x1="507.0" y1="46" x2="507.0" y2="508"/>
+<text class="tk" x="507.0" y="524" text-anchor="middle">40x</text>
+<line class="grid" x1="676.5" y1="46" x2="676.5" y2="508"/>
+<text class="tk" x="676.5" y="524" text-anchor="middle">60x</text>
+<line class="grid" x1="846.0" y1="46" x2="846.0" y2="508"/>
+<text class="tk" x="846.0" y="524" text-anchor="middle">80x</text>
+<text class="lbl" x="160" y="66.8" text-anchor="end" font-size="10">12-ahrs</text>
+<rect class="arm" x="168" y="50.7" width="643.3" height="12.1"/>
+<text class="tk" x="815.3" y="61.8" font-size="9">76x ARM</text>
+<rect class="rv" x="168" y="64.8" width="566.1" height="12.1"/>
+<text class="tk" x="738.1" y="75.9" font-size="9">67x RV</text>
+<text class="lbl" x="160" y="102.3" text-anchor="end" font-size="10">11-ekf</text>
+<rect class="arm" x="168" y="86.2" width="378.0" height="12.1"/>
+<text class="tk" x="550.0" y="97.3" font-size="9">45x ARM</text>
+<rect class="rv" x="168" y="100.3" width="361.0" height="12.1"/>
+<text class="tk" x="533.0" y="111.4" font-size="9">43x RV</text>
+<text class="lbl" x="160" y="137.8" text-anchor="end" font-size="10">13-quaternion</text>
+<rect class="arm" x="168" y="121.8" width="323.7" height="12.1"/>
+<text class="tk" x="495.7" y="132.8" font-size="9">38x ARM</text>
+<rect class="rv" x="168" y="135.8" width="317.0" height="12.1"/>
+<text class="tk" x="489.0" y="146.9" font-size="9">37x RV</text>
+<text class="lbl" x="160" y="173.4" text-anchor="end" font-size="10">14-control-pid</text>
+<rect class="arm" x="168" y="157.3" width="296.6" height="12.1"/>
+<text class="tk" x="468.6" y="168.4" font-size="9">35x ARM</text>
+<rect class="rv" x="168" y="171.4" width="299.2" height="12.1"/>
+<text class="tk" x="471.2" y="182.5" font-size="9">35x RV</text>
+<text class="lbl" x="160" y="208.9" text-anchor="end" font-size="10">22-biquad</text>
+<rect class="arm" x="168" y="192.8" width="283.9" height="12.1"/>
+<text class="tk" x="455.9" y="203.9" font-size="9">34x ARM</text>
+<rect class="rv" x="168" y="206.9" width="296.6" height="12.1"/>
+<text class="tk" x="468.6" y="218.0" font-size="9">35x RV</text>
+<text class="lbl" x="160" y="244.5" text-anchor="end" font-size="10">25-dotprod</text>
+<rect class="arm" x="168" y="228.4" width="228.8" height="12.1"/>
+<text class="tk" x="400.8" y="239.5" font-size="9">27x ARM</text>
+<rect class="rv" x="168" y="242.5" width="228.0" height="12.1"/>
+<text class="tk" x="400.0" y="253.5" font-size="9">27x RV</text>
+<text class="lbl" x="160" y="280.0" text-anchor="end" font-size="10">23-fft</text>
+<rect class="arm" x="168" y="263.9" width="196.6" height="12.1"/>
+<text class="tk" x="368.6" y="275.0" font-size="9">23x ARM</text>
+<rect class="rv" x="168" y="278.0" width="171.2" height="12.1"/>
+<text class="tk" x="343.2" y="289.1" font-size="9">20x RV</text>
+<text class="lbl" x="160" y="315.5" text-anchor="end" font-size="10">24-matmul</text>
+<rect class="arm" x="168" y="299.5" width="178.8" height="12.1"/>
+<text class="tk" x="350.8" y="310.5" font-size="9">21x ARM</text>
+<rect class="rv" x="168" y="313.5" width="200.9" height="12.1"/>
+<text class="tk" x="372.9" y="324.6" font-size="9">24x RV</text>
+<text class="lbl" x="160" y="351.1" text-anchor="end" font-size="10">15-control-allocation</text>
+<rect class="arm" x="168" y="335.0" width="159.3" height="12.1"/>
+<text class="tk" x="331.3" y="346.1" font-size="9">19x ARM</text>
+<rect class="rv" x="168" y="349.1" width="153.4" height="12.1"/>
+<text class="tk" x="325.4" y="360.2" font-size="9">18x RV</text>
+<text class="lbl" x="160" y="386.6" text-anchor="end" font-size="10">21-fir</text>
+<rect class="arm" x="168" y="370.5" width="143.2" height="12.1"/>
+<text class="tk" x="315.2" y="381.6" font-size="9">17x ARM</text>
+<rect class="rv" x="168" y="384.6" width="155.9" height="12.1"/>
+<text class="tk" x="327.9" y="395.7" font-size="9">18x RV</text>
+<text class="lbl" x="160" y="422.2" text-anchor="end" font-size="10">32-fc</text>
+<rect class="arm" x="168" y="406.1" width="67.8" height="12.1"/>
+<text class="tk" x="239.8" y="417.2" font-size="9">8x ARM</text>
+<rect class="rv" x="168" y="420.2" width="59.3" height="12.1"/>
+<text class="tk" x="231.3" y="431.2" font-size="9">7x RV</text>
+<text class="lbl" x="160" y="457.7" text-anchor="end" font-size="10">31-conv2d</text>
+<rect class="arm" x="168" y="441.6" width="63.6" height="12.1"/>
+<text class="tk" x="235.6" y="452.7" font-size="9">8x ARM</text>
+<rect class="rv" x="168" y="455.7" width="50.0" height="12.1"/>
+<text class="tk" x="222.0" y="466.8" font-size="9">6x RV</text>
+<text class="lbl" x="160" y="493.2" text-anchor="end" font-size="10">33-maxpool</text>
+<rect class="arm" x="168" y="477.1" width="9.3" height="12.1"/>
+<text class="tk" x="181.3" y="488.2" font-size="9">1x ARM</text>
+<rect class="rv" x="168" y="491.2" width="5.1" height="12.1"/>
+<text class="tk" x="177.1" y="502.3" font-size="9">1x RV</text>
+<text class="ax" x="507.0" y="546" text-anchor="middle">how many more instructions AVR softfloat needs (×)</text>
+</svg>
