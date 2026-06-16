@@ -353,8 +353,14 @@ export function tagsIndex({ site, tags, base: b = "" }) {
   return base({ site, title: "Tags", main, base: b, active: null, path: "tags/" });
 }
 
+// Rewrite root-absolute asset refs (e.g. /blogs/x.png) to the page's
+// relative base, so the site works under any path (project Pages subdir).
+const rebase = (html, b) =>
+  b ? html.replace(/\b(src|href)="\/(?!\/)/g, `$1="${b}`) : html;
+
 // ── Single post ────────────────────────────────────────────────
 export function post({ site, post: p, html, base: b = "" }) {
+  html = rebase(html, b);
   const tags = (p.tags || [])
     .map((t) => `<li><a href="${b}tags/${slugifyTag(t)}/">${esc(t)}</a></li>`)
     .join("");
@@ -394,6 +400,7 @@ export function post({ site, post: p, html, base: b = "" }) {
 
 // ── Generic markdown page (e.g. About) ─────────────────────────
 export function page({ site, title, html, base: b = "", active, path = "", image, imageAlt, caption }) {
+  html = rebase(html, b);
   const fig = image
     ? `<figure class="portrait">
         <img src="${b}${esc(image)}" alt="${esc(imageAlt || title)}" loading="lazy" />
