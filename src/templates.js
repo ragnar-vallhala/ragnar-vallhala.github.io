@@ -53,9 +53,10 @@ function footer(site) {
   const links = (site.links || [])
     .map((l) => `<a href="${esc(l.href)}">${esc(l.label)}</a>`)
     .join("");
+  const rss = `<a href="${esc(abs(site, "feed.xml"))}" title="Subscribe via RSS">RSS</a>`;
   return `
     <footer class="site-foot">
-      <div class="foot-links">${links}</div>
+      <div class="foot-links">${links}${rss}</div>
       <p class="foot-meta">© ${site.year} ${esc(site.name)}. Made by hand with Markdown.</p>
     </footer>`;
 }
