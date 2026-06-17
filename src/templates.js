@@ -81,6 +81,8 @@ export function base({
     : "";
   const mermaidTag = main.includes('class="mermaid"') ? MERMAID_SCRIPT : "";
   const katexTag = main.includes('class="katex') ? KATEX_CSS(b) : "";
+  // Reader's annotation layer — only on article pages (posts).
+  const annotateTag = ogType === "article" ? `<script src="${b}annotate.js" defer></script>` : "";
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -113,6 +115,8 @@ export function base({
   </main>
   ${footer(site)}
   ${mermaidTag}
+  ${annotateTag}
+  <script src="${b}marked-docs.js" defer></script>
 </body>
 </html>`;
 }

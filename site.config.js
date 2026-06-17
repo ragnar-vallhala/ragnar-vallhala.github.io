@@ -9,7 +9,7 @@ export default {
   // A short intro shown on the home page. Plain text or light HTML.
   intro:
     "I build low-level systems, and I read far outside them. " +
-    "Flight stacks and kernels. Philosophy, politics, sociology. " +
+    "Flight stacks and kernels to humanities. " +
     "The verse below is the closest thing to my method. " +
     "Do the work fully. Hold the results loosely.",
 

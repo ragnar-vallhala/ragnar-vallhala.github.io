@@ -112,6 +112,15 @@ function mdToHtml(content) {
   html = html
     .replace(/<table>/g, '<div class="table-wrap"><table>')
     .replace(/<\/table>/g, "</table></div>");
+  // Promote a lone image into a <figure>; its markdown *title* (the "…" after
+  // the URL) becomes a styled <figcaption>. Images without a title are still
+  // wrapped, just uncaptioned — so other posts are visually unchanged.
+  html = html.replace(/<p><img\b([^>]*?)\s*\/?><\/p>/g, (_, attrs) => {
+    const t = attrs.match(/\stitle="([^"]*)"/);
+    const cap = t ? `<figcaption>${t[1]}</figcaption>` : "";
+    const imgAttrs = attrs.replace(/\stitle="[^"]*"/, "");
+    return `<figure class="fig"><img${imgAttrs}>${cap}</figure>`;
+  });
   return html;
 }
 
