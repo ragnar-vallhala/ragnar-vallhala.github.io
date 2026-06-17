@@ -809,6 +809,37 @@ mark.anno[data-color="accent"] { background: var(--hl-accent); }
   cursor: pointer;
 }
 .anno-bar-note:hover { color: var(--accent); }
+.anno-bar-x {
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  color: var(--ink-faint);
+  background: none;
+  border: none;
+  border-left: 1px solid var(--rule);
+  padding: 0 2px 0 7px;
+  cursor: pointer;
+  display: none;            /* desktop dismisses via Escape / click-away */
+}
+.anno-bar-x:hover { color: var(--accent); }
+
+/* touch: dock the toolbar to the bottom so the OS selection menu
+   (copy / share / web search) can't bury it */
+.anno-bar--tray {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  top: auto !important;
+  bottom: calc(60px + env(safe-area-inset-bottom, 0px));   /* clear the corner dock */
+  z-index: 62;
+  gap: 12px;
+  padding: 10px 14px;
+  max-width: calc(100vw - 24px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.26);
+}
+.anno-bar--tray .anno-sw { width: 26px; height: 26px; }   /* finger-sized targets */
+.anno-bar--tray .anno-bar-note { font-size: 0.8rem; padding-left: 9px; }
+.anno-bar--tray .anno-bar-x { display: inline; }
 
 /* per-highlight popover */
 .anno-pop {

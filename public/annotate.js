@@ -88,6 +88,22 @@
     return r;
   }
 
+  // The last valid selection, captured as character offsets so a highlight can
+  // be created even after the live selection collapses — which it does the
+  // instant a finger taps anything on touch (and the OS copy/share/search menu
+  // takes over). There is no reliable mouseup-with-selection on mobile.
+  var pending = null;
+  function captureRange() {
+    var r = currentRange();
+    if (!r) return null;
+    var start = offsetOf(r.startContainer, r.startOffset);
+    var end = offsetOf(r.endContainer, r.endOffset);
+    if (start < 0 || end < 0) return null;
+    if (end < start) { var t = start; start = end; end = t; }
+    if (end - start < 1) return null;
+    return { start: start, end: end, quote: r.toString().trim() };
+  }
+
   // ── wrap / unwrap ────────────────────────────────────────────────────
   function wrap(a) {
     var w = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
@@ -179,16 +195,12 @@
 
   // ── create from selection ────────────────────────────────────────────
   function addFromSelection(color, withNote) {
-    var r = currentRange();
-    if (!r) return;
-    var start = offsetOf(r.startContainer, r.startOffset);
-    var end = offsetOf(r.endContainer, r.endOffset);
-    if (start < 0 || end < 0) return;
-    if (end < start) { var t = start; start = end; end = t; }
-    if (end - start < 1) return;
-    var a = { id: uid(), start: start, end: end, quote: r.toString().trim(), color: color, note: "" };
+    var sel = pending || captureRange();
+    if (!sel) return;
+    var a = { id: uid(), start: sel.start, end: sel.end, quote: sel.quote, color: color, note: "" };
     anns.push(a);
-    window.getSelection().removeAllRanges();
+    pending = null;
+    try { window.getSelection().removeAllRanges(); } catch (e) {}
     hideBar();
     renderAll();
     persist();
@@ -208,6 +220,12 @@
   function find(id) { for (var i = 0; i < anns.length; i++) if (anns[i].id === id) return anns[i]; return null; }
 
   // ── selection toolbar ────────────────────────────────────────────────
+  // Coarse pointer (touch): the OS owns the selection callout, so float-over
+  // positioning loses to it. We dock the toolbar to a bottom "tray" instead
+  // and drive it from selectionchange rather than mouseup.
+  var coarse = false;
+  try { coarse = window.matchMedia("(pointer: coarse)").matches; } catch (e) {}
+
   var bar = el("div", "anno-bar anno-ui");
   bar.addEventListener("mousedown", function (e) { e.preventDefault(); }); // keep the selection
   COLORS.forEach(function (c) {
@@ -218,15 +236,28 @@
   var nb = el("button", "anno-bar-note"); nb.textContent = "✎ note";
   nb.addEventListener("click", function () { addFromSelection(COLORS[0].id, true); });
   bar.appendChild(nb);
+  // Tray dismiss — touch only (Escape / click-away covers the desktop).
+  var xb = el("button", "anno-bar-x"); xb.textContent = "✕"; xb.title = "Dismiss";
+  xb.addEventListener("click", function () {
+    pending = null;
+    try { window.getSelection().removeAllRanges(); } catch (e) {}
+    hideBar();
+  });
+  bar.appendChild(xb);
   document.body.appendChild(bar);
 
   function hideBar() { bar.classList.remove("on"); }
   function showBar() {
-    var r = currentRange();
-    if (!r) { hideBar(); return; }
-    var rect = r.getBoundingClientRect();
-    if (!rect.width && !rect.height) { hideBar(); return; }
+    var sel = pending || captureRange();
+    if (!sel) { hideBar(); return; }
     bar.classList.add("on");
+    // Touch: pin to the bottom tray, clear of the native selection menu.
+    if (coarse) { bar.classList.add("anno-bar--tray"); bar.style.top = ""; bar.style.left = ""; return; }
+    // Desktop: float just above the live selection.
+    var r = currentRange();
+    if (!r) return;
+    var rect = r.getBoundingClientRect();
+    if (!rect.width && !rect.height) return;
     var bw = bar.offsetWidth, bh = bar.offsetHeight;
     var top = window.scrollY + rect.top - bh - 9;
     var left = window.scrollX + rect.left + rect.width / 2 - bw / 2;
@@ -332,11 +363,23 @@
   // ── events ───────────────────────────────────────────────────────────
   document.addEventListener("mouseup", function () { setTimeout(showBar, 0); });
   document.addEventListener("keyup", function (e) { if (e.key !== "Escape") setTimeout(showBar, 0); });
+  // Touch has no mouseup-with-selection; selectionchange is the reliable
+  // signal. Capture the range while it's valid so a tap on the tray can use it
+  // even after the selection collapses. We don't clear a captured selection on
+  // collapse — the user is likely reaching for a swatch.
+  var selTimer = null;
+  document.addEventListener("selectionchange", function () {
+    if (selTimer) clearTimeout(selTimer);
+    selTimer = setTimeout(function () {
+      var cap = captureRange();
+      if (cap) { pending = cap; if (coarse) showBar(); }
+    }, 100);
+  });
   document.addEventListener("mousedown", function (e) {
-    if (!bar.contains(e.target)) hideBar();
+    if (!bar.contains(e.target)) { pending = null; hideBar(); }
     if (!pop.contains(e.target) && !(e.target.closest && e.target.closest("mark.anno, .anno-flag, .anno-mnote"))) closePopover();
   });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { hideBar(); closePopover(); } });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") { pending = null; hideBar(); closePopover(); } });
   window.addEventListener("resize", function () { positionNotes(); });
   window.addEventListener("scroll", function () { if (bar.classList.contains("on")) showBar(); }, { passive: true });
 
