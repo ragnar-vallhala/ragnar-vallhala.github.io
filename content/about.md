@@ -14,9 +14,9 @@ through both halves. What makes a complex system hold, or fail?
 
 ## What I build
 
-I co-founded **[NAVRobotec](https://navrobotec.com)**. We're building a
-drone autopilot that's ours end to end. PCB to ground station, no
-foreign stack underneath. My work runs the whole height of it:
+At **[NAVRobotec](https://navrobotec.com)** I work on a drone autopilot
+built end to end. PCB to ground station, no foreign stack underneath. My
+part runs the whole height of it:
 
 - **NavHAL** — a vendor-agnostic hardware layer for Cortex-M chips.
 - **VaiOS** — a real-time kernel for a 1 kHz flight loop. I benchmarked
@@ -50,7 +50,8 @@ the institute's open day.
 ## Elsewhere
 
 This site is where I write it down — the engineering and the essays.
-Find my code on [GitHub](https://github.com/ragnar-vallhala), connect on
+The rest is on [GitHub](https://github.com/ragnar-vallhala): many more
+projects, side experiments, things that never got an essay. Connect on
 [LinkedIn](https://www.linkedin.com/in/ashutosh-vishwakarma-083305257/),
 or email me at
 [ashutoshvishwakarma208@gmail.com](mailto:ashutoshvishwakarma208@gmail.com).
