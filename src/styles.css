@@ -448,6 +448,19 @@ a { color: inherit; text-decoration: none; }
 }
 .page-sub { color: var(--ink-soft); margin: 0; font-size: 1.1rem; }
 
+/* listing: pinned highlights (home-style project cards) + per-entry tags */
+.pinned-block { margin: 0 0 3.5rem; }
+.pinned-head { margin: 0 0 1rem; }
+.pinned-label {
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-faint);
+}
+.entry-tags { margin: 0.1rem 0 0.8rem; }
+.entry-tags li { font-size: 0.62rem; padding: 0.15rem 0.55rem; }
+
 .year-group { margin-bottom: 3rem; }
 .year-label {
   font-family: var(--mono);
@@ -915,6 +928,122 @@ mark.anno[data-color="accent"] { background: var(--hl-accent); }
 }
 .anno-dock-btn:hover { color: var(--accent); background: var(--paper-2); }
 
+/* deep-link flash — a brief pulse when you land on #note=N */
+@keyframes anno-flash-kf {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  20%      { box-shadow: 0 0 0 3px var(--accent); }
+}
+mark.anno.anno-flash {
+  animation: anno-flash-kf 0.9s ease-in-out 2;
+  border-radius: 2px;
+}
+
+/* popover: copy-a-link button */
+.anno-pop-link {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  color: var(--ink-faint);
+  background: none;
+  border: none;
+  border-left: 1px solid var(--rule);
+  padding: 0 0 0 8px;
+  margin-left: auto;
+  cursor: pointer;
+}
+.anno-pop-link:hover { color: var(--accent); }
+.anno-pop-row .anno-pop-del { margin-left: 0; }   /* link now owns the auto-margin */
+
+/* a checked-off margin note reads as done */
+.anno-mnote.done { opacity: 0.55; text-decoration: line-through; }
+
+/* notebook — this page's notes as a checklist */
+.anno-notebook {
+  position: fixed;
+  left: 18px; bottom: 64px;        /* sits above the bottom-left dock */
+  z-index: 60;
+  width: min(320px, calc(100vw - 36px));
+  max-height: min(60vh, 460px);
+  overflow-y: auto;
+  display: none;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, 0.22);
+}
+.anno-notebook.on { display: block; }
+.anno-nb-head {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 0.9rem 0.6rem;
+  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--ink-soft);
+}
+.anno-nb-x {
+  background: none; border: none;
+  color: var(--ink-faint);
+  font-size: 1.15rem; line-height: 1;
+  cursor: pointer; padding: 0 0 0 0.6rem;
+}
+.anno-nb-x:hover { color: var(--accent); }
+.anno-nb-empty {
+  padding: 1rem 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.74rem;
+  line-height: 1.55;
+  color: var(--ink-faint);
+}
+.anno-nb-list { list-style: none; margin: 0; padding: 0.35rem; }
+.anno-nb-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.45rem 0.55rem;
+  border-radius: 8px;
+  border-left: 2px solid var(--rule);
+}
+.anno-nb-item[data-color="yellow"] { border-left-color: var(--hl-yellow); }
+.anno-nb-item[data-color="green"]  { border-left-color: var(--hl-green); }
+.anno-nb-item[data-color="blue"]   { border-left-color: var(--hl-blue); }
+.anno-nb-item[data-color="pink"]   { border-left-color: var(--hl-pink); }
+.anno-nb-item[data-color="accent"] { border-left-color: var(--hl-accent); }
+.anno-nb-cb { margin-top: 0.2rem; accent-color: var(--accent); cursor: pointer; flex: none; }
+.anno-nb-text {
+  flex: 1;
+  text-align: left;
+  background: none; border: none; padding: 0;
+  cursor: pointer;
+}
+.anno-nb-note {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--ink);
+}
+.anno-nb-text:hover .anno-nb-note { color: var(--accent); }
+.anno-nb-q {
+  display: block;
+  margin-top: 0.15rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--ink-faint);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.anno-nb-item.done .anno-nb-note { text-decoration: line-through; color: var(--ink-faint); }
+@media print { .anno-notebook { display: none !important; } }
+
 /* print: drop the UI, keep colours, render notes as numbered endnotes */
 .anno-endnotes { display: none; }
 @media print {
@@ -1058,5 +1187,37 @@ mark.anno[data-color="accent"] { background: var(--hl-accent); }
   color: var(--accent);
   vertical-align: 0.1em;
 }
+
+/* export / import footer */
+.md-foot {
+  position: sticky;
+  bottom: 0;
+  padding: 0.6rem 0.8rem 0.7rem;
+  border-top: 1px solid var(--rule);
+  background: var(--paper);
+}
+.md-actions { display: flex; gap: 0.5rem; }
+.md-btn {
+  flex: 1;
+  font-family: var(--mono);
+  font-size: 0.7rem;
+  color: var(--ink-soft);
+  background: var(--paper-2);
+  border: 1px solid var(--rule);
+  border-radius: 7px;
+  padding: 0.4rem 0.5rem;
+  cursor: pointer;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.md-btn:hover:not(:disabled) { color: var(--accent); border-color: var(--accent); }
+.md-btn:disabled { opacity: 0.45; cursor: default; }
+.md-status {
+  margin-top: 0.4rem;
+  min-height: 0.9rem;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  color: var(--ink-faint);
+}
+.md-status:empty { display: none; }
 
 @media print { .md-fab, .md-portal { display: none !important; } }

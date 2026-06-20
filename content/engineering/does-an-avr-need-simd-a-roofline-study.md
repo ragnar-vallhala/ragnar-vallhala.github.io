@@ -1,6 +1,7 @@
 ---
 title: Does an AVR Need SIMD? A Roofline Study That Said No
 date: 2026-06-14
+pinned: true
 description: I set out to design a wide-SIMD coprocessor for an 8-bit MCU. Then I measured twelve real kernels in a validated gem5 model. A roofline analysis talked me out of the vector unit — and pointed at what to build instead.
 tags: [computer-architecture, research, avr, roofline, gem5]
 ---

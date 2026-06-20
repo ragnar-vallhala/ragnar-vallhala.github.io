@@ -34,7 +34,13 @@
     try { localStorage.setItem(KEY, JSON.stringify(anns.map(strip))); } catch (e) {}
     updateIndex();
   }
-  function strip(a) { return { id: a.id, start: a.start, end: a.end, quote: a.quote, color: a.color, note: a.note }; }
+  function strip(a) {
+    return {
+      id: a.id, start: a.start, end: a.end, quote: a.quote,
+      prefix: a.prefix || "", suffix: a.suffix || "",
+      color: a.color, note: a.note, done: !!a.done
+    };
+  }
   var anns = load();
 
   // A site-wide index of which pages carry annotations, read by the global
@@ -88,6 +94,62 @@
     return r;
   }
 
+  // The whole article as a flat string, in the same character space the wrap()
+  // walker and offsetOf() count in (every text node, concatenated). Used to
+  // re-anchor highlights and to grab the context around a selection.
+  function fullText() {
+    var r = document.createRange();
+    r.selectNodeContents(root);
+    return r.toString();
+  }
+  var CTX = 40; // chars of context kept on each side for re-anchoring
+  function contextOf(text, start, end) {
+    return {
+      prefix: text.slice(Math.max(0, start - CTX), start),
+      suffix: text.slice(end, end + CTX)
+    };
+  }
+  // Occurrence of `needle` in `text` closest to `near` — disambiguates a quote
+  // that appears more than once by preferring the one nearest its old home.
+  function nearestIndex(text, needle, near) {
+    var best = -1, bestD = Infinity, from = 0, i;
+    while (needle && (i = text.indexOf(needle, from)) >= 0) {
+      var d = Math.abs(i - near);
+      if (d < bestD) { bestD = d; best = i; }
+      from = i + 1;
+    }
+    return best;
+  }
+  // Re-anchor an annotation against the current text. Offsets are a fast path;
+  // when the article has been edited under them, we relocate by the quote plus
+  // its surrounding context, then refresh the stored offsets/context. Returns
+  // false only when the quote can no longer be found at all (orphaned).
+  var reanchored = false;
+  function reanchor(a, text) {
+    var q = a.quote || "";
+    if (!q) return true; // legacy/empty — trust the offsets as-is
+    var found = -1;
+    var slice = text.slice(a.start, a.end);
+    if (slice.trim() === q) {
+      // Offsets still land on the quote. Skip any leading whitespace the old
+      // (pre-trim) capture may have included, so start/end frame it exactly.
+      found = a.start + (slice.length - slice.replace(/^\s+/, "").length);
+    } else if ((a.prefix || a.suffix) && text.indexOf(a.prefix + q + a.suffix) >= 0) {
+      found = text.indexOf(a.prefix + q + a.suffix) + (a.prefix || "").length;
+    } else {
+      found = nearestIndex(text, q, a.start); // last resort: quote alone
+    }
+    if (found < 0) return false;
+    if (found !== a.start || a.end - a.start !== q.length) {
+      a.start = found; a.end = found + q.length; reanchored = true;
+    }
+    if (!a.prefix && !a.suffix) { // backfill context for older marks
+      var c = contextOf(text, a.start, a.end);
+      a.prefix = c.prefix; a.suffix = c.suffix; reanchored = true;
+    }
+    return true;
+  }
+
   // The last valid selection, captured as character offsets so a highlight can
   // be created even after the live selection collapses — which it does the
   // instant a finger taps anything on touch (and the OS copy/share/search menu
@@ -101,7 +163,16 @@
     if (start < 0 || end < 0) return null;
     if (end < start) { var t = start; start = end; end = t; }
     if (end - start < 1) return null;
-    return { start: start, end: end, quote: r.toString().trim() };
+    // Trim whitespace off both ends and move the offsets in to match, so the
+    // stored offsets point exactly at the quote and prefix+quote+suffix
+    // reconstructs the source text verbatim (re-anchoring relies on this).
+    var raw = r.toString();
+    var lead = raw.length - raw.replace(/^\s+/, "").length;
+    var quote = raw.trim();
+    if (!quote) return null;
+    start += lead; end = start + quote.length;
+    var c = contextOf(fullText(), start, end);
+    return { start: start, end: end, quote: quote, prefix: c.prefix, suffix: c.suffix };
   }
 
   // ── wrap / unwrap ────────────────────────────────────────────────────
@@ -148,8 +219,12 @@
   var margin = null;
   function renderAll() {
     clearLayer();
+    // Re-anchor every mark against the live text before sorting/wrapping, so a
+    // revised article doesn't strand its highlights.
+    var text = fullText();
+    anns.forEach(function (a) { a._orphan = !reanchor(a, text); });
     anns.sort(function (a, b) { return a.start - b.start; });
-    anns.forEach(function (a) { a._marks = wrap(a); });
+    anns.forEach(function (a) { a._marks = a._orphan ? [] : wrap(a); });
     root.querySelectorAll("mark.anno").forEach(function (m) {
       m.addEventListener("click", function (e) { e.stopPropagation(); openPopover(m.dataset.id, m); });
     });
@@ -157,15 +232,17 @@
     margin = el("div", "anno-margin anno-ui");
     root.appendChild(margin);
     var n = 0;
+    anns.forEach(function (a) { a._num = 0; });
     anns.forEach(function (a) {
       if (!a.note || !a._marks.length) return;
       n++;
+      a._num = n; // the number the reader sees — also the #note=N deep-link target
       var last = a._marks[a._marks.length - 1];
       var flag = el("sup", "anno-flag");
       flag.dataset.n = n; flag.dataset.id = a.id;
       flag.addEventListener("click", function (e) { e.stopPropagation(); openPopover(a.id, last); });
       last.appendChild(flag);
-      var mn = el("aside", "anno-mnote");
+      var mn = el("aside", "anno-mnote" + (a.done ? " done" : ""));
       mn.dataset.color = a.color;
       var num = el("span", "anno-mnote-n"); num.textContent = n;
       var txt = el("span", "anno-mnote-t"); txt.textContent = a.note;
@@ -176,6 +253,7 @@
     });
     positionNotes();
     updateDock();
+    renderNotebook();
   }
 
   function positionNotes() {
@@ -197,7 +275,10 @@
   function addFromSelection(color, withNote) {
     var sel = pending || captureRange();
     if (!sel) return;
-    var a = { id: uid(), start: sel.start, end: sel.end, quote: sel.quote, color: color, note: "" };
+    var a = {
+      id: uid(), start: sel.start, end: sel.end, quote: sel.quote,
+      prefix: sel.prefix || "", suffix: sel.suffix || "", color: color, note: "", done: false
+    };
     anns.push(a);
     pending = null;
     try { window.getSelection().removeAllRanges(); } catch (e) {}
@@ -284,6 +365,9 @@
       b.addEventListener("click", function () { recolor(id, c.id); openPopover(id, document.querySelector('mark.anno[data-id="' + id + '"]')); });
       row.appendChild(b);
     });
+    var lnk = el("button", "anno-pop-link"); lnk.textContent = "Link"; lnk.title = "Copy a link to this note";
+    lnk.addEventListener("click", function () { copyLink(a, lnk); });
+    row.appendChild(lnk);
     var del = el("button", "anno-pop-del"); del.textContent = "Delete"; del.title = "Remove highlight";
     del.addEventListener("click", function () { removeAnn(id); });
     row.appendChild(del);
@@ -309,11 +393,13 @@
   // ── dock ─────────────────────────────────────────────────────────────
   var dock = el("div", "anno-dock anno-ui");
   var count = el("span", "anno-dock-count");
+  var bNotes = el("button", "anno-dock-btn"); bNotes.textContent = "Notes"; bNotes.title = "Open the notebook";
   var bToggle = el("button", "anno-dock-btn"); bToggle.textContent = "Hide"; bToggle.title = "Show / hide highlights";
   var bPrint = el("button", "anno-dock-btn"); bPrint.textContent = "Print"; bPrint.title = "Print with annotations";
   var bClear = el("button", "anno-dock-btn"); bClear.textContent = "Clear"; bClear.title = "Remove all annotations on this page";
-  dock.appendChild(count); dock.appendChild(bToggle); dock.appendChild(bPrint); dock.appendChild(bClear);
+  dock.appendChild(count); dock.appendChild(bNotes); dock.appendChild(bToggle); dock.appendChild(bPrint); dock.appendChild(bClear);
   document.body.appendChild(dock);
+  bNotes.addEventListener("click", function () { toggleNotebook(); });
   var hidden = false;
   bToggle.addEventListener("click", function () {
     hidden = !hidden;
@@ -335,6 +421,79 @@
         (notes ? " · " + notes + " note" + (notes === 1 ? "" : "s") : "");
     }
     dock.classList.toggle("empty", anns.length === 0);
+  }
+
+  // ── deep links: #note=N (the visible number) or #note=<id> ───────────
+  function linkFor(a) {
+    var frag = a._num ? a._num : a.id; // numbered notes get the human-friendly form
+    return location.origin + location.pathname + "#note=" + frag;
+  }
+  function copyLink(a, btn) {
+    var url = linkFor(a), was = btn.textContent;
+    function done() { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = was; }, 1200); }
+    try {
+      navigator.clipboard.writeText(url).then(done, function () { prompt("Copy this link:", url); });
+    } catch (e) { prompt("Copy this link:", url); }
+  }
+  function flash(a) {
+    if (!a || !a._marks || !a._marks.length) return;
+    a._marks[0].scrollIntoView({ behavior: "smooth", block: "center" });
+    root.querySelectorAll('mark.anno[data-id="' + a.id + '"]').forEach(function (m) {
+      m.classList.remove("anno-flash"); void m.offsetWidth; m.classList.add("anno-flash");
+      setTimeout(function () { m.classList.remove("anno-flash"); }, 1800);
+    });
+  }
+  function resolveHash() {
+    var m = /^#note=(.+)$/.exec(location.hash || "");
+    if (!m) return;
+    var v = decodeURIComponent(m[1]), a = null;
+    if (/^\d+$/.test(v)) {
+      var noted = anns.filter(function (x) { return x._num; });
+      noted.sort(function (x, y) { return x._num - y._num; });
+      a = noted[parseInt(v, 10) - 1];
+    } else {
+      a = find(v);
+    }
+    if (a) flash(a);
+  }
+
+  // ── notebook: this page's notes as a checklist ───────────────────────
+  var notebook = el("div", "anno-notebook anno-ui");
+  document.body.appendChild(notebook);
+  var nbOpen = false;
+  function toggleNotebook() { nbOpen = !nbOpen; notebook.classList.toggle("on", nbOpen); if (nbOpen) renderNotebook(); }
+  function renderNotebook() {
+    if (!nbOpen) return; // only the open panel needs rebuilding
+    var noted = anns.filter(function (a) { return a.note && a._marks && a._marks.length; });
+    noted.sort(function (a, b) { return a.start - b.start; });
+    notebook.innerHTML = "";
+    var head = el("div", "anno-nb-head");
+    var h = el("span"); h.textContent = "Notes (" + noted.length + ")";
+    var x = el("button", "anno-nb-x"); x.textContent = "×"; x.title = "Close";
+    x.addEventListener("click", toggleNotebook);
+    head.appendChild(h); head.appendChild(x);
+    notebook.appendChild(head);
+    if (!noted.length) {
+      var em = el("div", "anno-nb-empty");
+      em.textContent = "No notes yet. Select text and choose ✎ note to start your notebook.";
+      notebook.appendChild(em);
+      return;
+    }
+    var ul = el("ul", "anno-nb-list");
+    noted.forEach(function (a) {
+      var li = el("li", "anno-nb-item" + (a.done ? " done" : ""));
+      li.dataset.color = a.color;
+      var cb = el("input"); cb.type = "checkbox"; cb.className = "anno-nb-cb"; cb.checked = !!a.done;
+      cb.addEventListener("change", function () { a.done = cb.checked; persist(); renderAll(); });
+      var body = el("button", "anno-nb-text");
+      var t = el("span", "anno-nb-note"); t.textContent = a.note;
+      var q = el("span", "anno-nb-q"); q.textContent = a.quote;
+      body.appendChild(t); body.appendChild(q);
+      body.addEventListener("click", function () { flash(a); });
+      li.appendChild(cb); li.appendChild(body);
+      ul.appendChild(li);
+    });
+    notebook.appendChild(ul);
   }
 
   // ── print endnotes ───────────────────────────────────────────────────
@@ -382,6 +541,12 @@
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") { pending = null; hideBar(); closePopover(); } });
   window.addEventListener("resize", function () { positionNotes(); });
   window.addEventListener("scroll", function () { if (bar.classList.contains("on")) showBar(); }, { passive: true });
+  window.addEventListener("hashchange", resolveHash);
+  // Another script (the import in marked-docs.js) or another tab wrote our
+  // store — reload the marks for this page and re-render.
+  function reloadFromStorage() { anns = load(); renderAll(); }
+  window.addEventListener("marginalia:external", reloadFromStorage);
+  window.addEventListener("storage", function (e) { if (e.key === KEY) reloadFromStorage(); });
 
   // ── go ───────────────────────────────────────────────────────────────
   // Mermaid renders client-side and rewrites .prose text, which would shift
@@ -400,7 +565,12 @@
       else setTimeout(check, 100);
     })();
   }
-  whenReady(function () { renderAll(); if (anns.length) updateIndex(); /* bump "recently used" on visit */ });
+  whenReady(function () {
+    renderAll();
+    if (reanchored) persist(); // an article edit moved some marks — save the corrected offsets
+    if (anns.length) updateIndex(); /* bump "recently used" on visit */
+    setTimeout(resolveHash, 60); // honour a #note=… deep link once marks exist
+  });
   // Late layout shifts (font swap, image/SVG load) move the marks; realign.
   window.addEventListener("load", function () { setTimeout(positionNotes, 200); });
 })();

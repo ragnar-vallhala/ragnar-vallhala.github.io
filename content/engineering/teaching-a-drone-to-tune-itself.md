@@ -1,6 +1,7 @@
 ---
 title: "Teaching a Drone to Tune Itself: Closed-Loop PID Autotuning in SITL"
 date: 2026-06-06
+pinned: true
 description: "We built a closed-loop PID autotuner that flies its own experiments in simulation and searches the gain space — eight optimizers, a chatter-aware cost, and two failure modes that looked solved but weren't. A deep dive into the system, the algorithms, and the fixes."
 tags: [vayu, control, pid, simulation, optimization]
 ---

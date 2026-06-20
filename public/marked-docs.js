@@ -32,6 +32,87 @@
   }
   function el(t, c) { var e = document.createElement(t); if (c) e.className = c; return e; }
 
+  // ── export / import ──────────────────────────────────────────────────
+  // annotate.js stores each page's marks under "marginalia:<path>" and lists
+  // the pages in IDX. We read those keys directly (no shared module) and round-
+  // trip them as one file, keyed by path — the same shape as annotations.json.
+  var PREFIX = "marginalia:";
+  function pageData(path) {
+    try { return JSON.parse(localStorage.getItem(PREFIX + path)) || []; } catch (e) { return []; }
+  }
+  function buildExport() {
+    var idx = readIndex(), out = {};
+    Object.keys(idx).forEach(function (path) {
+      var arr = pageData(path);
+      if (!arr.length) return;
+      out[path] = { title: (idx[path] && idx[path].title) || path, annotations: arr };
+    });
+    return out;
+  }
+  function download() {
+    var json = JSON.stringify(buildExport(), null, 2);
+    var url = URL.createObjectURL(new Blob([json], { type: "application/json" }));
+    var a = el("a"); a.href = url; a.download = "annotations.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+  function writeIndexEntry(path, title, arr) {
+    var idx = readIndex();
+    if (!arr.length) { delete idx[path]; }
+    else {
+      idx[path] = {
+        path: path, url: path,
+        title: title || (idx[path] && idx[path].title) || path,
+        count: arr.length,
+        notes: arr.filter(function (a) { return a.note; }).length,
+        updated: Date.now()
+      };
+    }
+    try { localStorage.setItem(IDX, JSON.stringify(idx)); } catch (e) {}
+  }
+  // Merge an uploaded file into local storage. Per page: keep what's there and
+  // fold in the upload — same id ⇒ the uploaded mark wins; otherwise it's added
+  // (skipping an exact start/end/note duplicate). Existing pages aren't wiped.
+  function importData(obj) {
+    var pages = 0, added = 0, updated = 0, affectedHere = false;
+    Object.keys(obj || {}).forEach(function (path) {
+      var entry = obj[path];
+      var incoming = Array.isArray(entry) ? entry : (entry && entry.annotations) || [];
+      if (!incoming.length) return;
+      var existing = pageData(path);
+      var byId = {};
+      existing.forEach(function (a) { byId[a.id] = a; });
+      incoming.forEach(function (a) {
+        if (!a || !a.id) return;
+        if (byId[a.id]) { Object.assign(byId[a.id], a); updated++; return; }
+        var dup = existing.some(function (e) { return e.start === a.start && e.end === a.end && e.note === a.note; });
+        if (dup) return;
+        existing.push(a); byId[a.id] = a; added++;
+      });
+      try { localStorage.setItem(PREFIX + path, JSON.stringify(existing)); } catch (e) {}
+      writeIndexEntry(path, entry && entry.title, existing);
+      if (path === location.pathname) affectedHere = true;
+      pages++;
+    });
+    // Tell this tab's annotate.js (if any) to re-render the current page.
+    if (affectedHere) { try { window.dispatchEvent(new CustomEvent("marginalia:external")); } catch (e) {} }
+    try { window.dispatchEvent(new CustomEvent("marginalia:change")); } catch (e) {}
+    return { pages: pages, added: added, updated: updated };
+  }
+  function pickFile(cb) {
+    var inp = el("input"); inp.type = "file"; inp.accept = "application/json,.json";
+    inp.addEventListener("change", function () {
+      var f = inp.files && inp.files[0]; if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        try { cb(JSON.parse(reader.result)); }
+        catch (e) { cb(null); }
+      };
+      reader.readAsText(f);
+    });
+    inp.click();
+  }
+
   // ── the corner button ────────────────────────────────────────────────
   var btn = el("button", "md-fab");
   btn.type = "button";
@@ -67,27 +148,51 @@
 
     if (!list.length) {
       var em = el("div", "md-empty");
-      em.textContent = "Nothing marked yet. Select text on any post and highlight it — marked pages collect here.";
+      em.textContent = "Nothing marked yet. Select text on any post and highlight it — marked pages collect here. Or import a saved notes file below.";
       portal.appendChild(em);
-      return;
+    } else {
+      var ul = el("ul", "md-list");
+      list.forEach(function (e) {
+        var li = el("li", "md-item");
+        if (e.path === location.pathname) li.classList.add("md-current");
+        var a = el("a", "md-link");
+        a.href = e.url || e.path;
+        var t = el("span", "md-title"); t.textContent = e.title || e.path;
+        var m = el("span", "md-meta");
+        var marks = e.count + (e.count === 1 ? " mark" : " marks");
+        var notes = e.notes ? " · " + e.notes + " note" + (e.notes === 1 ? "" : "s") : "";
+        m.textContent = marks + notes + " · " + rel(e.updated);
+        a.appendChild(t); a.appendChild(m);
+        li.appendChild(a);
+        ul.appendChild(li);
+      });
+      portal.appendChild(ul);
     }
 
-    var ul = el("ul", "md-list");
-    list.forEach(function (e) {
-      var li = el("li", "md-item");
-      if (e.path === location.pathname) li.classList.add("md-current");
-      var a = el("a", "md-link");
-      a.href = e.url || e.path;
-      var t = el("span", "md-title"); t.textContent = e.title || e.path;
-      var m = el("span", "md-meta");
-      var marks = e.count + (e.count === 1 ? " mark" : " marks");
-      var notes = e.notes ? " · " + e.notes + " note" + (e.notes === 1 ? "" : "s") : "";
-      m.textContent = marks + notes + " · " + rel(e.updated);
-      a.appendChild(t); a.appendChild(m);
-      li.appendChild(a);
-      ul.appendChild(li);
+    // ── export / import footer ──
+    var foot = el("div", "md-foot");
+    var actions = el("div", "md-actions");
+    var exp = el("button", "md-btn"); exp.type = "button"; exp.textContent = "↓ Export";
+    exp.title = "Download all annotations as a JSON file";
+    exp.disabled = !list.length;
+    exp.addEventListener("click", download);
+    var imp = el("button", "md-btn"); imp.type = "button"; imp.textContent = "↑ Import";
+    imp.title = "Load a notes file — merged into existing pages";
+    var status = el("div", "md-status");
+    imp.addEventListener("click", function () {
+      pickFile(function (data) {
+        if (!data || typeof data !== "object") { status.textContent = "Couldn't read that file."; return; }
+        var r = importData(data);
+        status.textContent = "Merged " + r.pages + " page" + (r.pages === 1 ? "" : "s") +
+          " · " + r.added + " added, " + r.updated + " updated";
+        render(); // refresh the list, then restore the status line
+        var s2 = portal.querySelector(".md-status");
+        if (s2) s2.textContent = status.textContent;
+      });
     });
-    portal.appendChild(ul);
+    actions.appendChild(exp); actions.appendChild(imp);
+    foot.appendChild(actions); foot.appendChild(status);
+    portal.appendChild(foot);
   }
 
   function setOpen(v) {

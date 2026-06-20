@@ -240,7 +240,7 @@ export function home({ site, posts, base: b = "" }) {
         <h2>Recent Writing</h2>
         <span class="block-num">02</span>
       </div>
-      <ul class="entries">${postRows || `<li class="empty">No posts yet — drop a <code>.md</code> file in <code>content/</code>.</li>`}</ul>
+      <ul class="entries">${postRows || `<li class="empty">No posts yet. The first one is on its way.</li>`}</ul>
       <div class="more-row">
         <a class="more" href="${b}engineering/">Engineering <span aria-hidden="true">→</span></a>
         <a class="more" href="${b}essays/">Essays <span aria-hidden="true">→</span></a>
@@ -288,6 +288,13 @@ export function listing({ site, section, posts, base: b = "" }) {
                 <time class="entry-date">${fmtDate(p.date)}</time>
               </a>
               ${p.description ? `<p class="entry-desc">${esc(p.description)}</p>` : ""}
+              ${
+                (p.tags || []).length
+                  ? `<ul class="tags entry-tags">${p.tags
+                      .map((t) => `<li><a href="${b}tags/${slugifyTag(t)}/">${esc(t)}</a></li>`)
+                      .join("")}</ul>`
+                  : ""
+              }
             </li>`
             )
             .join("")}
@@ -300,12 +307,47 @@ export function listing({ site, section, posts, base: b = "" }) {
     ? `${posts.length} ${posts.length === 1 ? "piece" : "pieces"} · ${section.sub}`
     : section.sub;
 
+  // Three pinned highlights, styled like the home project cards. Curate with
+  // `pinned: true` in a post's frontmatter; otherwise fall back to the latest.
+  const clip = (s, n = 150) => {
+    s = String(s || "");
+    if (s.length <= n) return s;
+    return s.slice(0, n).replace(/\s+\S*$/, "").replace(/[\s,;:.]+$/, "") + "…";
+  };
+  const pinned = posts.filter((p) => p.pinned);
+  const pins = (pinned.length ? pinned : posts).slice(0, 3);
+  const pinsBlock = pins.length
+    ? `
+    <section class="pinned-block">
+      <div class="pinned-head"><span class="pinned-label">Pinned</span></div>
+      <ul class="projects">${pins
+        .map(
+          (p) => `
+        <li class="project">
+          <a class="project-link" href="${b}${section.route}/${p.slug}/">
+            <div class="project-top">
+              <h3 class="project-title">${esc(p.title)}</h3>
+              <span class="project-year">${fmtDate(p.date)}</span>
+            </div>
+            <p class="project-blurb">${esc(clip(p.description))}</p>
+            <ul class="tags">${(p.tags || [])
+              .slice(0, 4)
+              .map((t) => `<li>${esc(t)}</li>`)
+              .join("")}</ul>
+          </a>
+        </li>`
+        )
+        .join("")}</ul>
+    </section>`
+    : "";
+
   const main = `
     <header class="page-head">
       <h1>${esc(section.title)}</h1>
       <p class="page-sub">${esc(count)}</p>
     </header>
-    ${posts.length ? sections : `<p class="empty">Nothing here yet — drop a <code>.md</code> file in <code>content/${esc(section.dir)}/</code> and rebuild.</p>`}`;
+    ${pinsBlock}
+    ${posts.length ? sections : `<p class="empty">Nothing here yet. Something is being written — check back soon.</p>`}`;
 
   return base({
     site, title: section.title, description: section.sub,

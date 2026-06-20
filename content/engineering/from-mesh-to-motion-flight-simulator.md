@@ -1,6 +1,7 @@
 ---
 title: "From Mesh to Motion: The Mechanics and Numerics of a Flight Simulator"
 date: 2026-06-17
+pinned: true
 description: "vsim_d is the physics daemon that flies Vayu's real firmware in software. A field report from the seam where Newton–Euler rigid-body mechanics meets RK4, quaternion drift, impulse contact, and a hard-real-time loop — including the cleanest way I know to turn a triangle mesh into an inertia tensor, and the bugs where the physics was right but the numerics (or the systems) lied."
 tags: [vayu, simulation, rigid-body-dynamics, numerical-methods, real-time, embedded]
 ---

@@ -35,7 +35,7 @@ const SECTIONS = [
     route: "engineering",
     title: "Engineering",
     label: "eng",
-    sub: "Notes from building systems — embedded, RTOS, and computer architecture.",
+    sub: "Long-form field reports from building real systems — flight firmware, simulators, RTOSes, and CPU models — and the bugs that live where the math meets the machine.",
   },
   {
     key: "essays",
@@ -189,6 +189,7 @@ function loadPosts(section) {
         date: data.date || null,
         description: data.description || "",
         tags: data.tags || [],
+        pinned: data.pinned === true,
         readingTime: Math.max(1, Math.round(words / 200)),
         html: mdToHtml(content),
         // section context, used for links + labels
