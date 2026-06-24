@@ -508,8 +508,11 @@ a { color: inherit; text-decoration: none; }
 .portrait {
   float: right;
   margin: 0 0 1.5rem 2rem;
-  /* transparent cutout → text wraps the person's actual contour */
-  shape-outside: url(gen1.png);
+  /* transparent cutout → text wraps the person's actual contour.
+     A tiny downscaled silhouette (not the 2.2 MB display image) so the
+     shape decodes on first layout — otherwise text overlaps until the
+     heavy image loads on a cold cache. */
+  shape-outside: url(gen1-shape.png);
   shape-image-threshold: 0.1; /* faint edges count as solid → text kept off them */
   shape-margin: 2.6rem;        /* loose clearance between text and silhouette */
 }
@@ -517,6 +520,8 @@ a { color: inherit; text-decoration: none; }
   display: block;
   height: 56vh;          /* 80vh reduced by 30% */
   width: auto;
+  aspect-ratio: 1 / 1;   /* square source: reserve float width before the image loads
+                            so text wraps on a cold cache instead of overlapping */
   max-width: 100%;
   /* keyed-out background — merges into the page, no frame */
 }

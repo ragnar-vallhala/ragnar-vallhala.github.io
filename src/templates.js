@@ -450,7 +450,7 @@ export function page({ site, title, html, base: b = "", active, path = "", image
   html = rebase(html, b);
   const fig = image
     ? `<figure class="portrait">
-        <img src="${b}${esc(image)}" alt="${esc(imageAlt || title)}" loading="lazy" />
+        <img src="${b}${esc(image)}" alt="${esc(imageAlt || title)}" />
         ${caption ? `<figcaption>${esc(caption)}</figcaption>` : ""}
       </figure>`
     : "";
