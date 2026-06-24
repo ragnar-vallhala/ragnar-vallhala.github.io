@@ -509,7 +509,7 @@ a { color: inherit; text-decoration: none; }
   float: right;
   margin: 0 0 1.5rem 2rem;
   /* transparent cutout → text wraps the person's actual contour */
-  shape-outside: url(Ashutosh-cut.png);
+  shape-outside: url(gen1.png);
   shape-image-threshold: 0.1; /* faint edges count as solid → text kept off them */
   shape-margin: 2.6rem;        /* loose clearance between text and silhouette */
 }

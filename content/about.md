@@ -1,6 +1,6 @@
 ---
 title: About
-image: Ashutosh-cut.png
+image: gen1.png
 imageAlt: Ashutosh Vishwakarma
 ---
 

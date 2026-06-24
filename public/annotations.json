@@ -1,0 +1,97 @@
+{
+  "/engineering/from-mesh-to-motion-flight-simulator/": {
+    "title": "From Mesh to Motion: The Mechanics and Numerics of a Flight Simulator",
+    "annotations": [
+      {
+        "id": "an8frjf3",
+        "start": 9467,
+        "end": 9511,
+        "quote": "Eberly's polyhedral mass-properties integral",
+        "prefix": " small piece of computational geometry: ",
+        "suffix": " (the refinement of Mirtich's method), w",
+        "color": "green",
+        "note": "Read this"
+      },
+      {
+        "id": "akh1ic6b",
+        "start": 9531,
+        "end": 9547,
+        "quote": "Mirtich's method",
+        "prefix": "-properties integral (the refinement of ",
+        "suffix": "), which turns volume integrals into a s",
+        "color": "green",
+        "note": "Read this"
+      },
+      {
+        "id": "a6ex2w44",
+        "start": 11223,
+        "end": 11230,
+        "quote": "winding",
+        "prefix": "ementation from a plausible one. First, ",
+        "suffix": ": an inside-out mesh flips the sign of t",
+        "color": "blue",
+        "note": "What is winding geometry?"
+      },
+      {
+        "id": "ay0h3rsp",
+        "start": 13212,
+        "end": 13224,
+        "quote": "Newton–Euler",
+        "prefix": "e (physics_core.cpp:22) is the textbook ",
+        "suffix": " set:\np˙=vw,v˙w=1m R(q) Fb−cm(vw−vwind)+",
+        "color": "green",
+        "note": "Read this"
+      },
+      {
+        "id": "aijurl8x",
+        "start": 14257,
+        "end": 14264,
+        "quote": "nutates",
+        "prefix": "— the reason a tumbling asymmetric body ",
+        "suffix": ", exchanging angular velocity between ax",
+        "color": "green",
+        "note": "The video by Veritasium, worth rewatch :)"
+      },
+      {
+        "id": "ag6ikm4n",
+        "start": 14853,
+        "end": 14922,
+        "quote": "The inverse itself (vsim_math.h:149) guards against a singular tensor",
+        "prefix": "nges and caches it (physics_core.h:27). ",
+        "suffix": " by returning identity rather than a mat",
+        "color": "yellow",
+        "note": "How?"
+      },
+      {
+        "id": "a4zpsjof",
+        "start": 18982,
+        "end": 19016,
+        "quote": "This is the thrust-tilt corruption",
+        "prefix": "/s2. The sensor feels gravity sideways. ",
+        "suffix": ", and it's the physical reason a low-mar",
+        "color": "green",
+        "note": "Read on it"
+      },
+      {
+        "id": "ae2glc93",
+        "start": 19991,
+        "end": 20001,
+        "quote": "Box–Muller",
+        "prefix": "distribution generates values in pairs (",
+        "suffix": ") and caches the second one between call",
+        "color": "green",
+        "note": "Read it"
+      },
+      {
+        "id": "anxguo29",
+        "start": 26343,
+        "end": 26364,
+        "quote": "Dryden shaping filter",
+        "prefix": "nce, modelled as a discrete first-order ",
+        "suffix": " driven by white noise (wind_model.h):\nv",
+        "color": "green",
+        "note": "Read it"
+      }
+    ]
+  }
+}
