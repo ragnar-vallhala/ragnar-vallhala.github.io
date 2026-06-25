@@ -520,10 +520,14 @@ a { color: inherit; text-decoration: none; }
 }
 .portrait img {
   display: block;
-  height: 56vh;          /* 80vh reduced by 30% */
-  width: auto;
-  aspect-ratio: 1 / 1;   /* square source: reserve float width before the image loads
-                            so text wraps on a cold cache instead of overlapping */
+  width: clamp(16rem, 30vw, 26rem);  /* size by VIEWPORT WIDTH, not height: the float (and
+                                        thus the shape-outside wrap contour) stays stable as
+                                        the window is resized vertically. Sizing by 56vh made
+                                        the wrap geometry depend on window height, so text
+                                        cleared the portrait on tall windows but ran across it
+                                        on short ones. */
+  height: auto;
+  aspect-ratio: 1 / 1;   /* square source reserves the float box before the image decodes */
   max-width: 100%;
   /* keyed-out background — merges into the page, no frame */
 }
