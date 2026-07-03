@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="466.302296pt" height="270.546156pt" viewBox="0 0 466.302296 270.546156" xmlns="http://www.w3.org/2000/svg" version="1.1"><style>:root{--c-paper:#f6f2e9;--c-ink:#211e1a;--c-soft:#5a554c;--c-faint:#8a8478;--c-grid:#d8d0bf;--c-accent:#b4451f;--c-slate:#3f6b86;--c-olive:#5c6e3a;--c-gold:#9a6b1f}@media (prefers-color-scheme:dark){:root{--c-paper:#1a1815;--c-ink:#ece4d4;--c-soft:#b3aa98;--c-faint:#7c7568;--c-grid:#38332c;--c-accent:#e07a4e;--c-slate:#8fb4c8;--c-olive:#8aa05a;--c-gold:#c89a4e}}</style>
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-04T04:31:33.227575</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.6.3, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 270.546156 
+L 466.302296 270.546156 
+L 466.302296 0 
+L 0 0 
+z
+" style="fill: var(--c-paper)"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 48.047969 233.781219 
+L 452.039507 233.781219 
+L 452.039507 26.649219 
+L 48.047969 26.649219 
+z
+" style="fill: var(--c-paper)"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 66.41122 233.781219 
+L 151.16469 233.781219 
+L 151.16469 49.433739 
+L 66.41122 49.433739 
+z
+" clip-path="url(#p1b6e796fc6)" style="fill: var(--c-gold)"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 207.667003 233.781219 
+L 292.420473 233.781219 
+L 292.420473 103.978499 
+L 207.667003 103.978499 
+z
+" clip-path="url(#p1b6e796fc6)" style="fill: var(--c-accent)"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 348.922786 233.781219 
+L 433.676255 233.781219 
+L 433.676255 126.072579 
+L 348.922786 126.072579 
+z
+" clip-path="url(#p1b6e796fc6)" style="fill: var(--c-olive)"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 108.787955 233.781219 
+L 108.787955 26.649219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mbf692018f1" d="M 0 0 
+L 0 3 
+" style="stroke: var(--c-soft); stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mbf692018f1" x="108.787955" y="233.781219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(90.429127 248.596531)">Income</text>
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(84.398033 260.960531)">(nominal)</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 250.043738 233.781219 
+L 250.043738 26.649219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mbf692018f1" x="250.043738" y="233.781219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(235.291707 248.596531)">Prices</text>
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(236.890144 260.960531)">(CPI)</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 391.299521 233.781219 
+L 391.299521 26.649219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mbf692018f1" x="391.299521" y="233.781219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(372.940693 248.596531)">Income</text>
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(377.917333 260.960531)">(real)</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <path d="M 48.047969 233.781219 
+L 452.039507 233.781219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <defs>
+       <path id="me15b71fb23" d="M 0 0 
+L -3 0 
+" style="stroke: var(--c-soft); stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="233.781219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="237.938875" transform="rotate(-0 41.547969 237.938875)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_9">
+      <path d="M 48.047969 199.259219 
+L 452.039507 199.259219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="199.259219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="203.416875" transform="rotate(-0 41.547969 203.416875)">50</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11">
+      <path d="M 48.047969 164.737219 
+L 452.039507 164.737219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="164.737219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="168.894875" transform="rotate(-0 41.547969 168.894875)">100</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 48.047969 130.215219 
+L 452.039507 130.215219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="130.215219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="134.372875" transform="rotate(-0 41.547969 134.372875)">150</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <path d="M 48.047969 95.693219 
+L 452.039507 95.693219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="95.693219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="99.850875" transform="rotate(-0 41.547969 99.850875)">200</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_17">
+      <path d="M 48.047969 61.171219 
+L 452.039507 61.171219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="61.171219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="65.328875" transform="rotate(-0 41.547969 65.328875)">250</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19">
+      <path d="M 48.047969 26.649219 
+L 452.039507 26.649219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke: var(--c-grid); stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#me15b71fb23" x="48.047969" y="26.649219" style="fill: var(--c-soft); stroke: var(--c-soft); stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="fill: var(--c-soft); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="41.547969" y="30.806875" transform="rotate(-0 41.547969 30.806875)">300</text>
+     </g>
+    </g>
+    <g id="text_11">
+     <text style="fill: var(--c-ink); font: 11px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="15.515313" y="130.215219" transform="rotate(-90 15.515313 130.215219)">index (2011–12 = 100)</text>
+    </g>
+   </g>
+   <g id="line2d_21">
+    <path d="M 48.047969 164.737219 
+L 452.039507 164.737219 
+" clip-path="url(#p1b6e796fc6)" style="fill: none; stroke-dasharray: 3.7,1.6; stroke-dashoffset: 0; stroke: var(--c-faint)"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 48.047969 233.781219 
+L 48.047969 26.649219 
+" style="fill: none; stroke: var(--c-soft); stroke-width: 0.9; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 48.047969 233.781219 
+L 452.039507 233.781219 
+" style="fill: none; stroke: var(--c-soft); stroke-width: 0.9; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <text style="fill: var(--c-soft); font: 9px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: end" x="459.102296" y="160.023584" transform="rotate(-0 459.102296 160.023584)">2011–12 = 100</text>
+   </g>
+   <g id="text_13">
+    <text style="fill: var(--c-ink); font: 12px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="108.787955" y="43.379039" transform="rotate(-0 108.787955 43.379039)">2.7×</text>
+   </g>
+   <g id="text_14">
+    <text style="fill: var(--c-paper); font: 8.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="108.787955" y="218.128981" transform="rotate(-0 108.787955 218.128981)">₹63k → ₹1.70L</text>
+   </g>
+   <g id="text_15">
+    <text style="fill: var(--c-ink); font: 12px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="250.043738" y="97.923799" transform="rotate(-0 250.043738 97.923799)">1.9×</text>
+   </g>
+   <g id="text_16">
+    <text style="fill: var(--c-paper); font: 8.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="250.043738" y="218.128981" transform="rotate(-0 250.043738 218.128981)">≈ doubled</text>
+   </g>
+   <g id="text_17">
+    <text style="fill: var(--c-ink); font: 12px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="391.299521" y="120.017879" transform="rotate(-0 391.299521 120.017879)">1.6×</text>
+   </g>
+   <g id="text_18">
+    <text style="fill: var(--c-paper); font: 8.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="391.299521" y="218.128981" transform="rotate(-0 391.299521 218.128981)">₹63k → ₹99k</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 314.320103 77.160055 
+Q 343.124861 113.456212 388.283024 125.294299 
+" style="fill: none; stroke: var(--c-faint); stroke-linecap: round"/>
+    <path d="M 385.089028 122.492801 
+L 388.283024 125.294299 
+L 384.125428 126.168597 
+" style="fill: none; stroke: var(--c-faint); stroke-linecap: round"/>
+   </g>
+   <g id="text_19">
+    <text style="fill: var(--c-soft); font: 9.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(271.232105 60.849819)">real income still</text>
+    <text style="fill: var(--c-soft); font: 9.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif" transform="translate(271.232105 71.527819)">+56% (≈4%/yr)</text>
+   </g>
+   <g id="text_20">
+    <text style="fill: var(--c-ink); font: 12.5px 'Newsreader', 'Georgia', 'DejaVu Serif', serif; text-anchor: middle" x="250.043738" y="16.649219" transform="rotate(-0 250.043738 16.649219)">Real income outran inflation — the fall is real</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p1b6e796fc6">
+   <rect x="48.047969" y="26.649219" width="403.991538" height="207.132"/>
+  </clipPath>
+ </defs>
+</svg>
